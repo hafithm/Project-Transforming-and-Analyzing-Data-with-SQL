@@ -86,9 +86,13 @@ GROUP BY sku
 HAVING count(*) > 1
 
 -- TRIM sku and name columns for any extra space
+
 -- Fill out with 0 null values from columns sentiment_score and sentiment_magnitude
+
 -- Order table by sku
--- Create a view of the cleaned table
+
+--Create a view of the cleaned table
+
 CREATE OR REPLACE VIEW working_products AS 
     SELECT 
         TRIM(sku) AS sku,
@@ -129,7 +133,7 @@ ALTER TABLE clean_products
 RENAME TO products_clean;	
 	
 	
-	-- create back_up files for all tables in the db future references just in case of a mess up 
+-- create back_up files for all tables in the database for future references just in case of a mess up 
 create table analytics_backup as
 select * from analytics
 
