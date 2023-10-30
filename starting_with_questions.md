@@ -5,27 +5,35 @@ Answer the following questions and provide the SQL queries used to find the answ
 
 
 SQL Queries:
+
 SELECT
 		country,
 		city,
 		SUM("totalTransactionRevenue") AS total_transaction_revenue
+
 FROM
 		all_sessions_clean
+
 WHERE
 		"totalTransactionRevenue" != 0
 		AND  city <> 'not available in demo dataset'
 
+
 GROUP BY 
 		country,
 		city
+
 ORDER BY 
 	total_transaction_revenue DESC;
 
 
 
 Answer:
+
 -- Calculating revenue by country and city using column "totalTransactionRevenue" 
+
 -- USA is the country that has the highest level of transaction revenue
+
 -- Cities include New York, Los Angeles and San Francisco
 
 
@@ -35,36 +43,30 @@ Answer:
 
 
 SQL Queries:
-WITH product_orders AS (
-    SELECT
-        "visitId",
-        country,
-        city,
-        COUNT(DISTINCT "productSKU") AS num_products_ordered
-    FROM
-        all_sessions_clean
-    WHERE
-        "productSKU" IS NOT NULL
-		AND city <> 'not available in demo dataset'
-    GROUP BY
-        "visitId",
-        country,
-        city
-)
 
-SELECT
-    country,
-    city,
-     ROUND(AVG(num_products_ordered)::numeric, 3) AS average_products_ordered
-FROM
-    product_orders
-GROUP BY
-    country,
-    city;
+SELECT s.city, s.country, round(avg(sk.total_ordered), 2) as Rounded_Avg
+
+FROM all_sessions_clean s 
+
+JOIN 
+		sales_report_clean sr ON sr."productSKU" = s."productSKU"
+JOIN 
+		sales_by_sku sk ON sr."productSKU" = sr."productSKU"
+  
+WHERE city <> 'not available in demo dataset' and city <> '(not set)' 
+
+GROUP BY  s.city, s.country, s."fullvisitorId"
+
+ORDER BY avg(sk.total_ordered) desc;
 
 
 Answer:
-the answer is 1 for every country 
+1. San Francisco USA at 167 products on average from visitors
+2. Palo Alto USA - 112 products
+3. New York USA - 112 products
+4. San Francisco USA - 112 products
+5. Los Angeles USA - 112 products
+
 
 
 
@@ -73,37 +75,30 @@ the answer is 1 for every country
 
 
 SQL Queries:
--- Retrieving the relevant data:
-
-SELECT          a."visitNumber" ,  
-				a."fullvisitorId" , 
-				s."fullvisitorId" , 
-				a."visitStartTime" ,
-				s."productPrice" , 
-				s."productSKU"
-				
-				
-FROM 	
-				analytics_clean a
-JOIN 	
-				all_sessions_clean s ON a."visitId" = s."visitId";
 
 -- Grouping the data by the "fullvisitorId" and "productSKU" columns. 
+
 -- The COUNT(*) function is used to count the number of occurrences for each unique combination of "fullVisitorId" and "productSKU". 
+
 -- This will give you the count of orders for each visitor and product SKU.
 
 SELECT 
+
 			a."fullvisitorId", 
 			s."productSKU", 
 			COUNT(*) AS order_count
    
+   
 FROM 
 			analytics_clean a
+   
    
 JOIN 
 			all_sessions_clean s ON a."visitId" = s."visitId"
    
+   
 GROUP BY 
+
 			a."fullvisitorId", 
 			s."productSKU";
 
@@ -111,22 +106,28 @@ GROUP BY
 -- This query will group the data by "fullVisitorId" and the product category name from the "products" table, 
 -- and calculate the count of orders for each visitor and product category.
 
+
 SELECT 
 			a."fullvisitorId", 
 			p.name AS category,
 			COUNT(*) AS order_count
    
+   
 FROM 
 			analytics_clean a
+   
    
 JOIN 
 			all_sessions_clean s ON a."visitId" = s."visitId"
    
+   
 JOIN 
 			sales_report_clean sr  ON sr."productSKU" = s."productSKU"
    
+   
 JOIN 
 			products p ON sr."stockLevel" = p."stockLevel"
+   
    
 GROUP BY 
 			a."fullvisitorId", p.name;
@@ -145,12 +146,19 @@ Answer:
 
 SQL Queries:
 
+-- The CTE is used to calculate the most popular product for each city and country.
+
 WITH top_products AS (
+
   SELECT
     		p.product_name,
    			s.city,
     		s.country,
     		ROW_NUMBER() OVER (PARTITION BY s.city, s.country ORDER BY COUNT(*) DESC) AS popular_product
+
+      -- assigns a row number to each combination of city and country, ordered by the count of occurrences in descending order. 
+      -- The row number represents the popularity rank of the product within each city and country.
+      
   FROM 	
 			analytics_clean a
     JOIN 
@@ -182,8 +190,10 @@ WITH top_products AS (
 
 
 Answer:
--- I noticed that in certain regions closer to the equator such as Brazil, Columbia etc... tend to buy lighter clothing 
+-- I noticed that in certain regions closer to the equator such as Brazil, Columbia etc... tend to buy lighter clothing
+
 --  such as short sleeve Tee's and Cap's 
+
 -- On the contrary, I realized that countries in northern Europe and in the West such as the US and Canada buy onesie and jacket's. 
 
 
@@ -197,37 +207,52 @@ SQL Queries:
 
 
 CREATE TEMPORARY TABLE revenue_table AS
+
 SELECT s.country, 
+
 		s.city, 
 		s."fullvisitorId", 
 		p.sku, 
 		SUM(a.unit_price * p."orderedQuantity") AS revenue
+  
 FROM 
 		analytics_clean a
+  
 JOIN 
 		all_sessions_clean  s ON a."visitId" = s."visitId"
+  
 JOIN 
 		sales_report_clean  sr ON sr."productSKU" = s."productSKU"
+  
 JOIN 
 		products_clean  p ON sr."stockLevel" = p."stockLevel"
+  
 WHERE 
 		a.revenue IS NULL
+  
 GROUP BY 
+
 		s.country,
-		s.city, 
+  		s.city, 
 		s."fullvisitorId", 
 		p.sku
+  
 limit 100
 		
-SELECT DISTINCT revenue, country, city
-FROM revenue_table
-order by revenue desc
+SELECT DISTINCT 	revenue, country, city
+
+
+FROM 			revenue_table
+
+
+order by 		revenue desc
 
 
 Answer:
 
--- I noticed revenue is at his highest in the USA 
--- Also the most popular and capital cities such as new york and USA have the highest revenues as well
+-- I noticed revenue is at his highest in the USA.
+
+-- Also the most populated cities and countries such as New York and USA have the highest revenues.
 
 
 
