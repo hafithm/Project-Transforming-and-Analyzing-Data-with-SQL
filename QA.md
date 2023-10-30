@@ -1,7 +1,12 @@
 What are your risk areas? Identify and describe them.
-1. A risk area could be disaster recovery. It's crucial to make sure you can access the ecommerce database. If it does it can go really bad for the busniess. To prevent this it is immportant to have backup tables to ensure that doesn't happen. This should minimize the the risk of losing data and can run smoothly when running the busniess. 
+A risk area could be disaster recovery. It's crucial to make sure you can access the ecommerce database. To prevent this it is important to have backup tables to ensure
 
-2. Some columns such as transactions have null values. This can mean incomplete data or missing info throughout the column. It's important to handle them accordingly by either setting them as 0 or just removing the column entirely. 
+that doesn't happen. This should minimize the the risk of losing data and can run smoothly when running the busniess. 
+
+
+2. Some columns such as transactions have null values. This can mean incomplete data or missing info throughout the column. It's important to handle them accordingly by
+
+either setting them as 0 or just removing the column entirely. 
 
 
 3. Important to handle null values because it lead to inconsistency and poor presentation which can be handleded better. In some cases you can also remove the column. 
