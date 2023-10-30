@@ -37,21 +37,22 @@ FROM analytics_backup
 GROUP BY "visitNumber"
 HAVING count(*) > 1
 
--- Deleting duplicate visitNumber's
-WITH remove_dup AS (
-  SELECT "visitNumber", count(*) AS row_count,
-         ROW_NUMBER() OVER (PARTITION BY "visitNumber" ORDER BY "visitNumber") AS rows
-  FROM analytics_backup
-  GROUP BY "visitNumber"
-  HAVING count(*) > 1
+-- Deleting duplicate visitNumer's
+		WITH remove_duplicates AS (
+		SELECT "visitNumer" , count(*) AS row_count
+		ROW_NUMBER() over (Particition BY "visitNumer" ORDER BY "visitNumer") AS rows
+FROM analytics_clean 
+GROUP BY "visitNumer" 
+HAVING count (*) > 1
 )
-DELETE FROM analytics_backup
-WHERE ("visitNumber", remove_dup) IN (
-  SELECT "visitNumber", remove_dup
-  FROM remove_dup
-  WHERE rows > 1
-);
+DELETE FROM analytics_backup 
+WHERE ("visitNumber" , remove_duplicate) IN (
+	SELECT "visitNumber" , remove_duplicate
+ FROM remove_duplicate
+ WHERE rows > 1
+ );
 -
+
 DELETE FROM analytics_backup
 WHERE id NOT IN (
   SELECT MIN(id)
@@ -67,8 +68,6 @@ RENAME TO analytics_clean;
 UPDATE analytics_clean
 SET bounces = 0;
 -- This query will update all rows in the analytics_clean table and set bounces columns to 0.
-
-
 
 
 
