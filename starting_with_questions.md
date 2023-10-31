@@ -192,7 +192,7 @@ SQL Queries:
 -- Using a temp table because it provides a flexible and efficient way to store and manipulate data.
 -- changing the null values in revenue column to equate to unitprice * orderedQuantity using a temp table for efficiency
 
-
+```
 CREATE TEMPORARY TABLE revenue_table AS
 
 SELECT s.country, 
@@ -234,6 +234,7 @@ FROM 			revenue_table
 
 order by 		revenue desc
 
+```
 
 Answer:
 
