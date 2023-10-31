@@ -5,7 +5,7 @@ Answer the following questions and provide the SQL queries used to find the answ
 
 
 SQL Queries:
-
+```
 SELECT
 		country,
 		city,
@@ -25,7 +25,7 @@ GROUP BY
 
 ORDER BY 
 	total_transaction_revenue DESC;
-
+```
 
 
 Answer:
@@ -52,7 +52,7 @@ Answer:
 
 
 SQL Queries:
-
+```
 SELECT s.city, s.country, round(avg(sk.total_ordered), 2) as Rounded_Avg
 
 FROM all_sessions_clean s 
@@ -62,92 +62,70 @@ JOIN
 JOIN 
 		sales_by_sku sk ON sr."productSKU" = sr."productSKU"
   
-WHERE city <> 'not available in demo dataset' and city <> '(not set)' 
+WHERE 		city <> 'not available in demo dataset' and city <> '(not set)'
 
-GROUP BY  s.city, s.country, s."fullvisitorId"
+GROUP BY 	s.city, s.country, s."fullvisitorId"
 
-ORDER BY avg(sk.total_ordered) desc;
+ORDER BY	 avg(sk.total_ordered) desc;
 
+```
 
 Answer:
-1. San Francisco USA at 167 products on average from visitors
-2. Palo Alto USA - 112 products
-3. New York USA - 112 products
-4. San Francisco USA - 112 products
-5. Los Angeles USA - 112 products
 
-
-
+```
+“city”	“country”	“rounded_avg”
+“San Francisco”	“United States”	167.00
+“Palo Alto”	“United States”	112.00
+“New York”	“United States”	112.00
+“San Francisco”	“United States”	112.00
+“Los Angeles”	“United States”	112.00
+```
 
 
 **Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country?**
 
 
 SQL Queries:
+```
+SELECT 		s.city, 
+			s.country,
+			s.productname, 
+			s."fullvisitorId" 
 
--- Grouping the data by the "fullvisitorId" and "productSKU" columns. 
+FROM 		all_sessions_clean s
 
--- The COUNT(*) function is used to count the number of occurrences for each unique combination of "fullVisitorId" and "productSKU". 
+JOIN 		sales_report_clean sr ON sr."productSKU" = s."productSKU" 
 
--- This will give you the count of orders for each visitor and product SKU.
+JOIN 		sales_by_sku_clean sk ON sr."productSKU" = sr."productSKU"
+			
+WHERE 		city <> '(not set)' and s.productname <> '(not set)' 
 
-SELECT 
+group by 		s.city, 
+				s.country,
+				s.productname, 
+				s."fullvisitorId"
+order by	 	s.country, 
+				s.city
 
-			a."fullvisitorId", 
-			s."productSKU", 
-			COUNT(*) AS order_count
-   
-   
-FROM 
-			analytics_clean a
-   
-   
-JOIN 
-			all_sessions_clean s ON a."visitId" = s."visitId"
-   
-   
-GROUP BY 
+```
 
-			a."fullvisitorId", 
-			s."productSKU";
+ ```
+"city"	"country"	"productname"	"fullvisitorId"
+"not available in demo dataset"	"Albania"	"22 oz YouTube Bottle Infuser"	"5832725431264256293"
+"not available in demo dataset"	"Albania"	"Google Women's Lightweight Microfleece Jacket"	"6675422547201751957"
+"not available in demo dataset"	"Albania"	"YouTube Men's Vintage Tank"	"6775659825894576935"
+"not available in demo dataset"	"Algeria"	"YouTube Twill Cap"	"21308687109528016"
+"Buenos Aires"	"Argentina"	"Google Men's Skater Tee Charcoal"	"7218311731838701761"
+"Buenos Aires"	"Argentina"	"Rocket Flashlight"	"9752731596862613394"
+"Rosario"	"Argentina"	"Google Men's Vintage Badge Tee Black"	"4894343382296033805"
+"Santa Fe"	"Argentina"	"SPF-15 Slim & Slender Lip Balm"	"6556394846497485581"
 
--- This query analyzes the product categories:
--- This query will group the data by "fullVisitorId" and the product category name from the "products" table, 
--- and calculate the count of orders for each visitor and product category.
-
-
-SELECT 
-			a."fullvisitorId", 
-			p.name AS category,
-			COUNT(*) AS order_count
-   
-   
-FROM 
-			analytics_clean a
-   
-   
-JOIN 
-			all_sessions_clean s ON a."visitId" = s."visitId"
-   
-   
-JOIN 
-			sales_report_clean sr  ON sr."productSKU" = s."productSKU"
-   
-   
-JOIN 
-			products p ON sr."stockLevel" = p."stockLevel"
-   
-   
-GROUP BY 
-			a."fullvisitorId", p.name;
-   
+```
 Answer:
--- A pattern I noticed is that each visitor has a specific number of an order_count for for how whatever many categories they have
--- This query hee retrieves data from multiple tables, joins them based on specific conditions, filters the results based on fullVisitorId values, 
--- the pattern I then get is the visitors behaviour when buying the amount of categories and which categories the visitor likes to buy. 
--- for examples, VisitorId "0001527863526384268" likes to buy his clothe in the amount of 376 while "0165390774652716922" like to buy in the amount of 292.
 
-
+- This query hee retrieves data from multiple tables, joins them based on specific conditions, filters the results based on fullVisitorId values, 
+- We can notice that in this data, the presence of Nest products suggests an interest in home automation and technology. Also there is a consistent presence of electronics, indicating a strong interest in technology and gadgets among visitors. Both men's and women's apparel are ordered, suggesting a diverse range of clothing products that are popular.
+- Various accessories such as headgear, stickers, and housewares are also present, showcasing a demand for personalization and unique items. 
 
 
 **Question 4: What is the top-selling product from each city/country? Can we find any pattern worthy of noting in the products sold?**
