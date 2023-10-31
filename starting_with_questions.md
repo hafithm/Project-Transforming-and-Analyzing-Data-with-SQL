@@ -134,7 +134,7 @@ Answer:
 SQL Queries:
 
 -- The CTE is used to calculate the most popular product for each city and country.
-
+```
 WITH top_products AS (
 
   SELECT
@@ -169,7 +169,8 @@ WITH top_products AS (
   					top_products
 			WHERE
  					popular_product = 1
-					
+```
+				
 -- represents the most popular product when popular_prouct = 1 
 --  indicates a pattern of products that are the most popular. 
 
