@@ -1,8 +1,10 @@
 What issues will you address by cleaning the data?
 
-1.Missing Data: One of the most common issues in datasets is missing data. This can occur due to various reasons such as data entry errors, system failures, or incomplete data collection. Cleaning the data involves identifying missing values and deciding how to handle them. You may choose to remove rows with missing values
-2. Duplicates occur when there are multiple identical or very similar entries in the dataset. Inconsistent data entries can arise due to data entry errors, variations in data sources, or different data collection methods.
-3. Data Type Conversion: In datasets, you may encounter data that is stored in the wrong data type. For example, numeric values may be stored as text or dates may be stored as strings.
+- Missing Data: One of the most common issues in datasets is missing data. This can occur due to various reasons such as data entry errors or incomplete data collection. Cleaning the data involves identifying missing values and deciding how to handle them. I am going to choose to remove rows with null values or set them to 0.
+- Duplicates occur when there are multiple identical or very similar entries in the dataset. Inconsistent data entries can arise due to data entry errors and variations in data sources. Below I will delete or drop columms that have no signifance or are redundant. 
+- Data Type Conversion: In datasets, I have encountered data that is stored in the wrong data type. For example, numeric values may be stored as text or dates may be stored as strings. I will address that below.
+- Adding a different table to do all of cleaning on and calling them "tablename"_clean. Before that I used the name, "tablename"_backup. This is to ensure that In don't lose any of the original data incase I make errors that are irreversible.
+- Better Readability: Renaming columns to more descriptive and meaningful names. 
 
 
 
