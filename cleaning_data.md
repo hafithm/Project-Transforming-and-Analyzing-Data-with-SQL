@@ -4,7 +4,8 @@ What issues will you address by cleaning the data?
 - Duplicates occur when there are multiple identical or very similar entries in the dataset. Inconsistent data entries can arise due to data entry errors and variations in data sources. Below I will delete or drop columms that have no signifance or are redundant. 
 - Data Type Conversion: In datasets, I have encountered data that is stored in the wrong data type. For example, numeric values may be stored as text or dates may be stored as strings. I will address that below.
 - Adding a different table to do all of cleaning on and calling them "tablename"_clean. Before that I used the name, "tablename"_backup. This is to ensure that In don't lose any of the original data incase I make errors that are irreversible.
-- Better Readability: Renaming columns to more descriptive and meaningful names. 
+- Better Readability: Renaming columns to more descriptive and meaningful names.
+- Change the time to a better format as a timestamp datatype which is hours and minutes
 
 
 
@@ -380,7 +381,12 @@ UPDATE all_sessions_clean
 SET "searchKeyword" = 'N/A', 
     "transactions" = 0
 WHERE "searchKeyword" IS NULL OR "transactions" IS NULL;
-
+--
+```
+- Changing the format of timOnSite for fullVisitorId's to hours and minutes.
+```
+SELECT "fullvisitorId", TO_CHAR(TO_TIMESTAMP("timeOnSite"), 'HH24:MI') AS new_timeonsite
+FROM all_sessions_clean;
 ```
 -- Cleaning sales_report_backup table
 ```
