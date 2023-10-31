@@ -36,8 +36,17 @@ Answer:
 
 -- Cities include New York, Los Angeles and San Francisco
 
-
-
+```
+"country"	"city"	"total_transaction_revenue"
+"United States"	"San Francisco"	1251130000
+"United States"	"Sunnyvale"	872230000
+"United States"	"Palo Alto"	608000000
+"Israel"	"Tel Aviv-Yafo"	602000000
+"United States"	"New York"	530360000
+"United States"	"Los Angeles"	479480000
+"United States"	"Mountain View"	474380000
+"United States"	"Chicago"	449520000
+```
 
 **Question 2: What is the average number of products ordered from visitors in each city and country?**
 
