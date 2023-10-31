@@ -174,7 +174,6 @@ WITH top_products AS (
 -- represents the most popular product when popular_prouct = 1 
 --  indicates a pattern of products that are the most popular. 
 
- 
 
 
 Answer:
@@ -183,8 +182,15 @@ Answer:
 --  such as short sleeve Tee's and Cap's 
 
 -- On the contrary, I realized that countries in northern Europe and in the West such as the US and Canada buy onesie and jacket's. 
-
-
+```
+" Learning Thermostat 3rd Gen-USA - Stainless Steel"	"Chicago"	"United States"
+" Women's Scoop Neck Tee Black"	"Mountain View"	"United States"
+" Laptop and Cell Phone Stickers"	"New York"	"United States"
+" Learning Thermostat 3rd Gen-USA - White"	"Palo Alto"	"United States"
+" Men's Long & Lean Tee Grey"	"San Francisco"	"United States"
+" Cam Indoor Security Camera - USA"	"Seattle"	"United States"
+"SPF-15 Slim & Slender Lip Balm"	"Sunnyvale"	"United States"
+```
 
 
 **Question 5: Can we summarize the impact of revenue generated from each city/country?**
@@ -237,7 +243,22 @@ order by 		revenue desc
 
 ```
 
+
+
 Answer:
+```
+SELECT DISTINCT revenue, country, city FROM revenue_table where city <> 'not available in demo dataset' AND city <> '(not set)'
+13209130000    "United States"    "Mountain View"
+52454500000    "United States"    "San Francisco"
+9388640000    "United States"    "Mountain View"
+20339250000    "United States"    "San Francisco"
+24251640280000    "United States"    "Sunnyvale"
+12203550000    "United States"    "San Francisco"
+12322590000    "United States"    "Mountain View"
+11735800000    "United States"    "Mountain View"
+42332160000    "United States"    "New York"
+45859840000    "United States"    "New York"
+```
 
 -- I noticed revenue is at his highest in the USA.
 
