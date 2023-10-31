@@ -4,12 +4,11 @@ What issues will you address by cleaning the data?
 
 -- Look for null values
 
+```
 SELECT *
-
 FROM analytics_backup
-
 WHERE NOT (analytics IS NOT NULL);
-
+```
 
 -- Drop the columns that are not needed
 
