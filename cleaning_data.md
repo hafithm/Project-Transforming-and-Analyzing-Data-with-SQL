@@ -64,8 +64,7 @@ JOIN sales_report sr ON sr."productSKU" = s."productSKU"
 JOIN clean_products cp ON sr."stockLevel" = cp."stockLevel"
 
 ```
-
-
+ 
 -- Look for duplicate visitNumber's
 
 ```
@@ -97,6 +96,19 @@ GROUP BY "visitNumber"
 
 HAVING count (*)
 )
+
+-- Remove duplicate values from "analytics_clean" table
+DELETE FROM analytics_clean
+WHERE "fullvisitorId" IN (
+  SELECT "fullvisitorId"
+  FROM (
+    SELECT "fullvisitorId",
+           ROW_NUMBER() OVER(PARTITION BY "fullvisitorId" ORDER BY "fullvisitorId") AS row_num
+    FROM analytics_clean
+  ) AS duplicates
+  WHERE duplicates.row_num > 1
+)	
+	
 ```
 ```
 DELETE FROM analytics_backup
