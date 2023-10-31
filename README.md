@@ -36,7 +36,7 @@
 
 - Know the relationship between the different tables more in depth. This could mean examing the tables more that are related to the time on the site or the transactions as well.
 
-- 
+
 
 
 
