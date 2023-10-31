@@ -3,6 +3,7 @@ What are your risk areas? Identify and describe them.
 - Some columns such as transactions have null values. This can mean incomplete data or missing info throughout the column. It's important to handle them accordingly by either setting them as 0 or just removing the column entirely. 
 - Inaccurate, incomplete, or inconsistent data can lead to wrong conclusions.
 - Assumptions made during analysis can be difficult to manage.
+- Removing duplicates 
 
 3. Important to handle null values because it lead to inconsistency and poor presentation which can be handleded better. In some cases you can also remove the column. 
 
@@ -50,7 +51,20 @@ WHERE transactions IS NULL;
 ```
 
 4. Query to delete the cities that have no data. Ensures we dont have any incomplete data when doing an analysis
+   
 ```
    (DELETE FROM all_sessions WHERE city = 'not available in demo dataset' and city = 'not set'
 ```
+5. Query for removing duplicates values from "analytics_clean" table
 
+```
+DELETE FROM analytics_clean
+WHERE "fullvisitorId" IN (
+  SELECT "fullvisitorId"
+  FROM (
+    SELECT "fullvisitorId",
+           ROW_NUMBER() OVER(PARTITION BY "fullvisitorId" ORDER BY "fullvisitorId") AS row_num
+    FROM analytics_clean
+  ) AS duplicates
+  WHERE duplicates.row_num > 1
+  ``` 
