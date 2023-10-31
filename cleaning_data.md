@@ -443,7 +443,23 @@ FROM sales_by_sku_backup
 GROUP BY "productSKU"
 HAVING count(*) > 1
 ```
-- There are no duplicates
+```
+-- Identify duplicate values
+SELECT total_ordered, COUNT(*) FROM sales_by_sku_clean
+GROUP BY total_ordered
+HAVING COUNT(*) > 1;
+
+
+-- Remove duplicate values
+DELETE FROM sales_by_sku_clean
+WHERE ctid NOT IN (
+  SELECT MIN(ctid)
+  FROM sales_by_sku_clean
+  GROUP BY total_ordered
+);
+
+
+```
 ```
 ALTER TABLE sales_by_sku_backup 
 RENAME TO sales_by_sku_clean;
