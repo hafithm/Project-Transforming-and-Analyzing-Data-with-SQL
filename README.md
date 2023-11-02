@@ -24,7 +24,7 @@
 - Dealing with inaccurate or missing information for cities in the data presented one of the biggest obstacles during the project. This presented a challenge in trying to evaluate and extract meaning from the data. It leaves holes in it and makes it more difficult to completely comprehend consumer behaviour all together.
 
 - Generating revenue from the analytics table and using other tables like the products table to compute it.  This can present some challenges especailly in cleaning.
-- 
+
 
 
 
