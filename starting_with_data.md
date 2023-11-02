@@ -14,7 +14,7 @@ ORDER BY viewCount DESC
 LIMIT 1;
 ```
 
-Answer: Product 1 3071 times
+Answer: page 1 3071 times
 
 
 
