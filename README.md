@@ -1,7 +1,6 @@
 # Final-Project-Transforming-and-Analyzing-Data-with-SQL
 
 ## Project/Goals
-(fill in your description and goals here)
 
 - My main goal in this project is to clean the data as much as I can with the time given. Get rid of null values, duplicatees, redundancy and irrelevant columns. This step is crucial for upmost accuracy and analysis. From there I can understand the purpose of the database and figure out what the data is entailing. 
 - Another goal is to combine the different tables and find if they're related in anyway. 
@@ -12,7 +11,6 @@
 
 
 ## Results
-(fill in what you discovered this data could tell you and how you used the data to answer those questions)
 
 - Upon analyzing the ecommerce database several valuable insights can be obtained to answer the questions provided. After examing the transaction data it becomes possible to identify the  cities and countries that contribute to the most revenue generated. In this database it happened  to be the USA and this can help make sense of the geographical  distribution and can guide marketing strategies. 
 - By examining the sales data, I determined the best-selling product in each city or country. This analysis helps in understanding customer preferences and identifying popular product categories. In countries such as the USA it became apparent that they purchased more jackets and  onesie's compared to counties such as Columbia and Brazil. Alongside those findings, I came up with a question that I found to be important for the companies growth. The data can be used to identify the most frequent viewed pages which can  help in changing the user's experience by giving more importance to that specific content. 
