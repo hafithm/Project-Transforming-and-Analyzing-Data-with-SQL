@@ -1,4 +1,4 @@
-# Final-Project-Transforming-and-Analyzing-Data-with-SQL
+# Transforming-and-Analyzing-Data-with-SQL
 
 - My main goal in this project is to clean the data as much as I can with the time given. Get rid of null values, duplicatees, redundancy and irrelevant columns. This step is crucial for upmost accuracy and analysis. From there I can understand the purpose of the database and figure out what the data is entailing. 
 - Another goal is to combine the different tables and find if they're related in anyway. 
